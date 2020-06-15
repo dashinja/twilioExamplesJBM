@@ -82,7 +82,9 @@ const VerifyServiceInitiation = async () => {
   }
 }
 
-module.exports {
+const verificationFunctions = {
   verification,
-    VerifyServiceInitiation
+  VerifyServiceInitiation
 }
+
+module.exports = verificationFunctions

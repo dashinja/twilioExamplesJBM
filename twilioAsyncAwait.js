@@ -3,6 +3,8 @@ const accountSID = process.env.AccountSID
 const authToken = process.env.AuthToken
 const client = require('twilio')(accountSID, authToken)
 const rl = require('readline')
+const v = require('helpers/functions.js')
+
 
 const readLine = rl.createInterface({
   input: process.stdin,
@@ -28,8 +30,8 @@ const listOfServices = async () => {
 // )()
 
 console.log('Initial ServiceSid', serviceSid)
-
-VerifyServiceInitiation();
+v.VerifyServiceInitiation();
+// VerifyServiceInitiation();
 
 
 
