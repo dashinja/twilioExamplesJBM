@@ -24,9 +24,9 @@ const listOfServices = async () => {
   return answer
 }
 
-(async () =>
-  console.log("answerTest: ", await listOfServices())
-)()
+// (async () =>
+//   console.log("answerTest: ", await listOfServices())
+// )()
 
 
 console.log("Initial ServiceSid", serviceSid)
@@ -51,10 +51,8 @@ client.verify.services.list()
           channel: "sms"
         })
         .then(verificationCode => console.log(verificationCode.status))
-
-        // Verify code
-        .then(verify => {
-          readLine.question("Enter Verification Code", (answer) => {
+        .then(verify => {// Verify code
+          readLine.question("Enter Verification Code: ", (answer) => {
             client.verify.services(serviceSid)
               .verificationChecks
               .create({ to: "+17047705187", code: `${answer}` })
@@ -67,12 +65,9 @@ client.verify.services.list()
         })
     } else {
       console.log("No Verify Services exist, creating...")
-      // Create Verify Service
-      client.verify.services.create({
-        friendlyName: "nodeTest service"
+      client.verify.services.create({// Create Verify Service
+        friendlyName: "Single Verify Service"
       })
-
-        // Send Verification Code
         .then(service => {
           serviceSid = service.sid
           console.log("ServiceSid", serviceSid)
@@ -83,9 +78,7 @@ client.verify.services.list()
               channel: "sms"
             })
             .then(verificationCode => console.log(verificationCode.status))
-
-            // Verify code
-            .then(verify => {
+            .then(verify => { // Verify code
               readLine.question("Enter Verification Code: ", (answer) => {
                 client.verify.services(serviceSid)
                   .verificationChecks

@@ -1,0 +1,23 @@
+{
+  "name": "twilioexamplesjbm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deleteTwilioServices.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dashinja/twilioExamplesJBM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dashinja/twilioExamplesJBM/issues"
+  },
+  "homepage": "https://github.com/dashinja/twilioExamplesJBM#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "twilio": "^3.46.0"
+  }
+}
