@@ -2,6 +2,7 @@ const { VerificationInstance } = require("twilio/lib/rest/verify/v2/service/veri
 require('dotenv').config()
 const accountSID = process.env.AccountSID
 const authToken = process.env.AuthToken
+const toNumber = process.env.toNumber
 const client = require('twilio')(accountSID, authToken)
 const rl = require('readline')
 
