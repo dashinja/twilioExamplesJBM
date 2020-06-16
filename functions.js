@@ -3,18 +3,16 @@ require('dotenv').config()
 const accountSID = process.env.AccountSID
 const authToken = process.env.AuthToken
 const client = require('twilio')(accountSID, authToken)
+const rl = require('readline')
 
-const v = require('./twilioAsyncAwait.js')
+const readLine = rl.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
 
 const listOfServices = async () => {
-  // const services = await client.verify.services.list()
   let answer = await client.verify.services.list()
-  // .then(services => {
-  //   // console.log("serviceObject", services[0])
-  //   // services.forEach(service => console.log("ServiceSid: ", service.sid))
-  //   answer = services
-
-  // })
   return answer
 }
 
@@ -22,7 +20,7 @@ const verification = async (answer) => {
   try {
     const verification_check = await client.verify
       .services(serviceSid)
-      .verificationChecks.create({ to: '+17047705187', code: `${answer}` })
+      .verificationChecks.create({ to: toNumber, code: `${answer}` })
 
     console.log(verification_check.status)
     readLine.close()
@@ -34,9 +32,7 @@ const verification = async (answer) => {
 
 const VerifyServiceInitiation = async () => {
   try {
-
-
-
+    // A previous service exists, use that instead
     const services = await listOfServices()
 
     console.log('answer1: ', services)
@@ -48,7 +44,7 @@ const VerifyServiceInitiation = async () => {
       const verificationCode = await client.verify
         .services(serviceSid)
         .verifications.create({
-          to: '+17047705187',
+          to: toNumber,
           channel: 'sms',
         })
 
@@ -57,7 +53,7 @@ const VerifyServiceInitiation = async () => {
       await readLine.question('Enter Verification Code: ', (answer) => {
         client.verify.services(serviceSid)
           .verificationChecks
-          .create({ to: "+17047705187", code: `${answer}` })
+          .create({ to: toNumber, code: `${answer}` })
           .then(verification_check => {
             console.log(verification_check.status)
             readLine.close();
@@ -65,6 +61,7 @@ const VerifyServiceInitiation = async () => {
       })
 
     } else {
+      // Create a Service | Send Verification Code | Verify Code | Report Status
       console.log('No Verify Services exist, creating...')
       const service = await client.verify.services.create({
         // Create Verify Service
@@ -76,7 +73,7 @@ const VerifyServiceInitiation = async () => {
       const verificationCode = await client.verify
         .services(serviceSid)
         .verifications.create({
-          to: '+17047705187',
+          to: toNumber,
           channel: 'sms',
         })
 
@@ -87,7 +84,7 @@ const VerifyServiceInitiation = async () => {
       await readLine.question('Enter Verification Code: ', (answer) => {
         client.verify.services(serviceSid)
           .verificationChecks
-          .create({ to: "+17047705187", code: `${answer}` })
+          .create({ to: toNumber, code: `${answer}` })
           .then(verification_check => {
             console.log(verification_check.status)
             readLine.close();

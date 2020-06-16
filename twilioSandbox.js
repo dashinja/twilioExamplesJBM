@@ -1,6 +1,7 @@
 require("dotenv").config();
 const accountSID = process.env.AccountSID
 const authToken = process.env.AuthToken
+const toNumber = process.env.toNumber
 const client = require("twilio")(accountSID, authToken);
 const rl = require("readline")
 
@@ -47,7 +48,7 @@ client.verify.services.list()
       client.verify.services(serviceSid)
         .verifications
         .create({
-          to: "+17047705187",
+          to: toNumber,
           channel: "sms"
         })
         .then(verificationCode => console.log(verificationCode.status))
@@ -55,7 +56,7 @@ client.verify.services.list()
           readLine.question("Enter Verification Code: ", (answer) => {
             client.verify.services(serviceSid)
               .verificationChecks
-              .create({ to: "+17047705187", code: `${answer}` })
+              .create({ to: toNumber, code: `${answer}` })
               .then(verification_check => {
                 console.log(verification_check.status)
                 readLine.close();
@@ -74,7 +75,7 @@ client.verify.services.list()
           client.verify.services(serviceSid)
             .verifications
             .create({
-              to: "+17047705187",
+              to: toNumber,
               channel: "sms"
             })
             .then(verificationCode => console.log(verificationCode.status))
@@ -82,7 +83,7 @@ client.verify.services.list()
               readLine.question("Enter Verification Code: ", (answer) => {
                 client.verify.services(serviceSid)
                   .verificationChecks
-                  .create({ to: "+17047705187", code: `${answer}` })
+                  .create({ to: toNumber, code: `${answer}` })
                   .then(verification_check => {
                     console.log(verification_check.status)
                     readLine.close();
