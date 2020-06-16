@@ -1,4 +1,22 @@
 const { VerificationInstance } = require("twilio/lib/rest/verify/v2/service/verification");
+require('dotenv').config()
+const accountSID = process.env.AccountSID
+const authToken = process.env.AuthToken
+const client = require('twilio')(accountSID, authToken)
+
+const v = require('./twilioAsyncAwait.js')
+
+const listOfServices = async () => {
+  // const services = await client.verify.services.list()
+  let answer = await client.verify.services.list()
+  // .then(services => {
+  //   // console.log("serviceObject", services[0])
+  //   // services.forEach(service => console.log("ServiceSid: ", service.sid))
+  //   answer = services
+
+  // })
+  return answer
+}
 
 const verification = async (answer) => {
   try {
@@ -84,7 +102,8 @@ const VerifyServiceInitiation = async () => {
 
 const verificationFunctions = {
   verification,
-  VerifyServiceInitiation
+  VerifyServiceInitiation,
+  listOfServices
 }
 
 module.exports = verificationFunctions
